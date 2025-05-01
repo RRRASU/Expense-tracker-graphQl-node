@@ -1,7 +1,7 @@
 const userTypeDef = `#graphql
     type User { 
         _id: ID!
-        userName: String!
+        username: String!
         password: String!
         profilePicture: String
         name: String!
@@ -14,4 +14,27 @@ const userTypeDef = `#graphql
         authUser: User
         user(userId: ID!): User
     }
+
+    type Mutation {
+        signUp(input: SignUpInput!) : User
+        login(input: LoginInput!): User
+        logout: LogoutResponse
+    }
+
+    input SignUpInput { 
+        username: String!
+        password: String!
+    }
+
+    input LoginInput {
+        username: String!
+        password: String!
+    }
+
+    type LogoutResponse { 
+        message: String!
+        success: Boolean
+    }
 `;
+
+export default userTypeDef;
