@@ -10,8 +10,8 @@ const userTypeDef = `#graphql
     }
 
     type Query {
-        users: [User]!
         authUser: User
+        users: [User]!
         user(userId: ID!): User
     }
 
@@ -24,6 +24,8 @@ const userTypeDef = `#graphql
     input SignUpInput { 
         username: String!
         password: String!
+        gender: String!
+        name: String!
     }
 
     input LoginInput {
