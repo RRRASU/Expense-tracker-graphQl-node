@@ -3,27 +3,31 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 const userResolver = {
   Query: {
-    authUser: async(_, __, context) => {
-        try {
-            const user  = context.getUser();
-            if (!user) {
-            throw new Error("User not found");
-            }
-            return user;
-        } catch (error) {
-            console.log("Error in authUser", error);
-            throw new Error(error.message || "Internal server error");
+    authUser: async (_, __, context) => {
+      try {
+        const user = context.getUser();
+        if (!user) {
+          throw new Error("User not found");
         }
+        return user;
+      } catch (error) {
+        console.log("Error in authUser", error);
+        throw new Error(error.message || "Internal server error");
+      }
     },
     /// This input structure is crucial , all the inputs are read in the second argument.
     /// user(parent, {userid}) -> parent is the parent resolver, which is not used here.
-    user: (_, { userId }, context) => {
-      const user = users.find((user) => user._id === userId);
-      if (!user) {
-        throw new Error("User not found");
+    user: async (_, { userId }, context) => {
+      try {
+        const user = await User.findById(userId);
+        return user;
+      } catch (error) {
+        console.log("Error in user query", error);
+        throw new Error(err.message || "User not found");
       }
-      return user;
     },
+
+    // TODO: Add user/Transation relationship
   },
   Mutation: {
     signUp: async (_, { input }, context) => {
@@ -48,7 +52,7 @@ const userResolver = {
           password: hashedPassword,
           profilePicture: gender === "male" ? boyProfilePic : girlProfilePic,
           name: name,
-          gender
+          gender,
         });
 
         await newUser.save(); // newUser.save() is a mongoose method to save the user in the database.
