@@ -43,7 +43,7 @@ const transactionResolver = {
                 throw new Error(error.message || "Error in creating transaction");
             }
         },
-        UpdateTransactionInputTransaction: async (_, {id}, context) => {
+        updateTransaction: async (_, {id}, context) => {
             try {
                 const transaction = await Transaction.findById(id);
                 if (!transaction) {

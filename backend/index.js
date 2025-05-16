@@ -4,6 +4,7 @@ import { ApolloServer } from "@apollo/server";
 import mergedTypeDefs from "./typeDefs/index.js";
 import mergedResolvers from "./resolvers/index.js";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import ApolloServerPluginLandingPageLocalDefault from "@apollo/server/plugin/landingPage/default";
 import http from "http";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -44,7 +45,8 @@ store.on("error", (error) => {
 const server = new ApolloServer({
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  graphiql: true,
+  plugins: [ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
 // Mongo session store

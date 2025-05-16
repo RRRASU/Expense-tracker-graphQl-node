@@ -18,7 +18,7 @@ const transactionTypeDef = `#graphql
     type Mutation {
         createTransaction(input: CreateTransactionInput!): Transaction!,
         updateTransaction(input: UpdateTransactionInput!): Transaction!,
-        deleteTransaction(input: deleteTransaction!): Transaction!
+        deleteTransaction(input: DeleteTransactionInput!): Transaction!
     }
 
     # fragment TrasactionInput on Transaction {
@@ -49,6 +49,10 @@ const transactionTypeDef = `#graphql
         amount: Float
         location: String
         date: String
+    }
+
+    input DeleteTransactionInput {
+        transactionId: ID!,
     }
 `;
 
